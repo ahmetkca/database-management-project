@@ -9,6 +9,16 @@ services:
       - "8000:8000"
     volumes:
       - backend_volume:/usr/src/app
+  
+  frontend:
+    build:
+      context: frontend
+    command: npm run dev -- --host 0.0.0.0
+    ports:
+      - "3000:3000"
+    volumes:
+      - frontend_volume:/usr/src/app
 
 volumes:
   backend_volume:
+  frontend_volume:
