@@ -25,8 +25,14 @@ SECRET_KEY = os.environ.get("SECRET_KEY", "reallysecretkeypleasechangeme")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = int(os.environ.get("DEBUG", 1))
 
-ALLOWED_HOSTS = [] if os.environ.get("ALLOWED_HOSTS") is None else os.environ.get("ALLOWED_HOSTS").split(" ")
+# ALLOWED_HOSTS = [] if os.environ.get("ALLOWED_HOSTS") is None else os.environ.get("ALLOWED_HOSTS").split(" ")
 
+# CORS_ALLOWED_ORIGINS = [] if os.environ.get("CORS_ALLOWED_ORIGINS") is None else os.environ.get("CORS_ALLOWED_ORIGINS").split(" ")
+
+# CORS_ORIGIN_WHITELIST = [] if os.environ.get("CORS_ALLOWED_ORIGINS") is None else os.environ.get("CORS_ALLOWED_ORIGINS").split(" ")
+ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
+CORS_ALLOWED_ORIGINS = ["http://localhost:3000", "http://127.0.0.1:3000"]
+CORS_ORIGIN_WHITELIST = ["http://localhost:3000", "http://127.0.0.1:3000"]
 
 # Application definition
 
@@ -37,6 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    
 ]
 
 MIDDLEWARE = [
