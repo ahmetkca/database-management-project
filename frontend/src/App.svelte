@@ -1,6 +1,18 @@
 <script>
   import logo from './assets/svelte.png'
   import Counter from './lib/Counter.svelte'
+  import { onMount } from 'svelte';
+
+  async function requestTest() {
+    const response = await fetch("http://localhost:8000", {mode: 'no-cors'});
+    console.log(response.text);
+    console.log(response.statusText);
+    console.log(response.status);
+  }
+
+  onMount(async () => {
+    await requestTest();
+  })
 </script>
 
 <main>
