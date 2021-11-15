@@ -2,23 +2,45 @@ version: "3.9"
 
 services:
   backend:
+    restart: always
+    container_name: backend
     build:
-      context: backend
-    command: gunicorn backend.wsgi:application --bind 0.0.0.0:8000
+      context: ./backend/
+      dockerfile: Dockerfile
+    # command: gunicorn backend.wsgi:application --bind 0.0.0.0:8000
+    command: python manage.py runserver 0.0.0.0:8000
     ports:
       - "8000:8000"
+    environment:
+      - ALLOWED_HOSTS=localhost 127.0.0.1
+      - CORS_ALLOWED_ORIGINS=http://localhost:3000 http://127.0.0.1:3000 127.0.0.1:3000 localhost:3000
+      - DEBUG=1
+      - SECRET_KEY=thisisareallysecretkeypleasechangeme
     volumes:
-      - backend_volume:/usr/src/app
+      - ./backend:/usr/src/app
+    networks:
+      - db-net
   
   frontend:
+    restart: always
+    container_name: frontend
     build:
-      context: frontend
+      context: ./frontend/
+      dockerfile: Dockerfile
     command: npm run dev -- --host 0.0.0.0
     ports:
       - "3000:3000"
     volumes:
-      - frontend_volume:/usr/src/app
+      - ./frontend:/usr/src/app
+    networks:
+      - db-net
+    depends_on:
+      - backend
 
-volumes:
-  backend_volume:
-  frontend_volume:
+# volumes:
+#   backend_volume:
+#   frontend_volume:
+
+networks:
+  db-net:
+    driver: bridge
