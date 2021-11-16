@@ -4,7 +4,7 @@
   import { onMount } from 'svelte';
 
   async function requestTest() {
-    const response = await fetch("http://localhost:8000", {mode: 'no-cors'});
+    const response = await fetch("http://localhost:8000", {mode: 'cors'});
     console.log(response.text);
     console.log(response.statusText);
     console.log(response.status);
