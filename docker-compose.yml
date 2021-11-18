@@ -22,15 +22,19 @@ services:
       - postgres-data:/var/lib/postgresql/data
     networks:
       - db-net
+
   backend:
     restart: always
     container_name: backend
     build:
       context: ./backend/
       dockerfile: Dockerfile
-    
+    # command: python manage.py runserver 0.0.0.0:8000
     # command: gunicorn backend.wsgi:application --bind 0.0.0.0:8000
-    command: python manage.py runserver 0.0.0.0:8000
+    # command: >
+    #   sh -c   "python manage.py makemigrations &&
+    #           python manage.py migrate && 
+    #           python manage.py runserver 0.0.0.0:8000"
     ports:
       - "8000:8000"
     environment:
@@ -64,7 +68,8 @@ services:
       - backend
 
 volumes:
-  postgres-data: 
+  postgres-data:
+    driver: local
 #   backend_volume:
 #   frontend_volume:
 
