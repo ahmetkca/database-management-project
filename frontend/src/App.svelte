@@ -1,81 +1,92 @@
 <script>
-  import logo from './assets/svelte.png'
-  import Counter from './lib/Counter.svelte'
-  import { onMount } from 'svelte';
-  let b = [];
-  async function requestTest() {
-    const response = await fetch("http://localhost:8000/product-types", {mode: 'cors'});
-    b = await response.json();
-    console.log(b);
-    console.log(response.text);
-    console.log(response.statusText);
-    console.log(response.status);
-  }
+  
+  /* Routing */
+  import Router, {location, link} from 'svelte-spa-router'
+  import Home from './Home.svelte';
+  import NotFound from './NotFound.svelte';
+  import Stores from './Stores.svelte';
+  import logo from './assets/GameStartLogo.png'
+  import AllGames from './AllGames.svelte';
+  import AllSystems from './AllSystems.svelte';
+  import AllMonitors from './AllMonitors.svelte';
+  import AllHeadsets from './AllHeadsets.svelte';
+  import AllChargers from './AllChargers.svelte';
+  import AllHoodies from './AllHoodies.svelte';
+  import Employees from './Employees.svelte';
+  import FiredEmployees from './FiredEmployees.svelte';
+  import Customers from './Customers.svelte';
+  import Inventories from './Inventories.svelte';
+  import StorageContainers from './StorageContainers.svelte';
+  import AllProducts from './AllProducts.svelte';
+  import CustomerOrders from './CustomerOrders.svelte';
+  import AddCustomer from './AddCustomer.svelte';
+  /* Routing */
 
-  onMount(async () => {
-    await requestTest();
-  })
+  
 </script>
 
-<main>
-  <img src={logo} alt="Svelte Logo" />
-  <h1>Hello world!</h1>
-  {#each b as a}
-    {JSON.stringify(a)}
-  {/each}
-  <Counter />
+<!-- Navbar -->
+<div class="navbar mb-2 shadow-lg bg-neutral text-neutral-content rounded-box">
+  <div class="flex-none px-2 mx-2">
+    <span class="text-lg font-bold">
+            Game Start
+          </span>
+  </div> 
+  <div class="flex-1 px-2 mx-2">
+    <div class="items-stretch hidden lg:flex">
+      <a class="btn btn-ghost btn-sm rounded-btn" href="/" use:link>
+              Home
+            </a> 
+      <a class="btn btn-ghost btn-sm rounded-btn" href="/stores" use:link>
+              Stores
+            </a>
+            <a class="btn btn-ghost btn-sm rounded-btn" href="/employees" use:link>
+              Employees
+            </a>  
+            <a class="btn btn-ghost btn-sm rounded-btn" href="/customers" use:link>
+              Customers
+            </a>  
+            <a class="btn btn-ghost btn-sm rounded-btn" href="/inventories" use:link>
+              Inventories
+            </a>  
+            <a class="btn btn-ghost btn-sm rounded-btn" href="/storagecontainers" use:link>
+              Storage Containers
+            </a>  
+            <a class="btn btn-ghost btn-sm rounded-btn" href="/allproducts" use:link>
+              All Products
+            </a>  
+    </div>
+  </div> 
+  <div class="flex-none">
+    <div class="avatar">
+      <div class="rounded-full w-10 h-10 m-1">
+        <img alt="?" src={logo}>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Navbar -->
 
-  <p>
-    Visit <a href="https://svelte.dev">svelte.dev</a> to learn how to build Svelte
-    apps.
-  </p>
 
-  <p>
-    Check out <a href="https://github.com/sveltejs/kit#readme">SvelteKit</a> for
-    the officially supported framework, also powered by Vite!
-  </p>
-</main>
+<Router routes={{
+  
+  '/': Home,
+  '/stores': Stores,
+  '/allgames': AllGames,
+  '/allsystems': AllSystems,
+  '/allmonitors':AllMonitors,
+  '/allheadsets': AllHeadsets,
+  '/allchargers': AllChargers,
+  '/allhoodies': AllHoodies,
+  '/employees': Employees,
+  '/firedemployees': FiredEmployees,
+  '/customers': Customers,
+  '/customerorders': CustomerOrders,
+  '/inventories': Inventories,
+  '/storagecontainers': StorageContainers,
+  '/allproducts': AllProducts,
+  '/addcustomer': AddCustomer,
+  
+  '*': NotFound 
+}} />
 
-<style>
-  :root {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
-      Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  }
-
-  main {
-    text-align: center;
-    padding: 1em;
-    margin: 0 auto;
-  }
-
-  img {
-    height: 16rem;
-    width: 16rem;
-  }
-
-  h1 {
-    color: #ff3e00;
-    text-transform: uppercase;
-    font-size: 4rem;
-    font-weight: 100;
-    line-height: 1.1;
-    margin: 2rem auto;
-    max-width: 14rem;
-  }
-
-  p {
-    max-width: 14rem;
-    margin: 1rem auto;
-    line-height: 1.35;
-  }
-
-  @media (min-width: 480px) {
-    h1 {
-      max-width: none;
-    }
-
-    p {
-      max-width: none;
-    }
-  }
-</style>
