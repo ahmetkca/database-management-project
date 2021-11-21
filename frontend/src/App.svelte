@@ -2,9 +2,11 @@
   import logo from './assets/svelte.png'
   import Counter from './lib/Counter.svelte'
   import { onMount } from 'svelte';
-
+  let b = [];
   async function requestTest() {
-    const response = await fetch("http://localhost:8000", {mode: 'cors'});
+    const response = await fetch("http://localhost:8000/product-types", {mode: 'cors'});
+    b = await response.json();
+    console.log(b);
     console.log(response.text);
     console.log(response.statusText);
     console.log(response.status);
@@ -18,7 +20,9 @@
 <main>
   <img src={logo} alt="Svelte Logo" />
   <h1>Hello world!</h1>
-
+  {#each b as a}
+    {JSON.stringify(a)}
+  {/each}
   <Counter />
 
   <p>
