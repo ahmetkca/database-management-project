@@ -1,4 +1,5 @@
 from re import L
+from django.db.models import manager
 from rest_framework import fields, serializers
 from api.models import (
     Order, 
@@ -18,10 +19,10 @@ from api.models import (
 
 
 class ProductTypeSerializer(serializers.ModelSerializer):
-    
+    specifications = serializers.StringRelatedField(many=True)
     class Meta:
         model = ProductType
-        fields = ['product_type_id', 'product_type_name']
+        fields = ['product_type_id', 'product_type_name', 'specifications']
 
 
 class ProductSpecificationSerializer(serializers.ModelSerializer):
@@ -33,15 +34,42 @@ class ProductSpecificationSerializer(serializers.ModelSerializer):
 
 
 class ProductSerializer(serializers.ModelSerializer):
-    spec1 = ProductSpecificationSerializer(read_only=True)
-    spec2 = ProductSpecificationSerializer(read_only=True)
-    spec3 = ProductSpecificationSerializer(read_only=True)
-    product_type = ProductTypeSerializer(read_only=True)
+    spec1 = ProductSpecificationSerializer(read_only=False)
+    spec2 = ProductSpecificationSerializer(read_only=False)
+    spec3 = ProductSpecificationSerializer(read_only=False)
+    product_type = ProductTypeSerializer(read_only=False)
 
     class Meta:
         model = Product
         fields = ['product_id', 'product_name', 'price', 'product_description', 'product_type', 'spec1', 'spec2', 'spec3']
 
+    def create(self, validated_data):
+        product_type_id = validated_data.pop('product_type_id')
+        spec1_id = validated_data.pop('spec1_id')
+        spec2_id = validated_data.pop('spec2_id')
+        spec3_id = validated_data.pop('spec3_id')
+        product_type = None
+        spec1 = None
+        spec2 = None
+        spec3 = None
+        try:
+            product_type = ProductType.objects.get(product_type_id=int(product_type_id))
+        except ProductType.DoesNotExist:
+            error = {'message': f"Product Type with given id {int(product_type_id)} does not exists."}
+            raise serializers.ValidationError(error)
+        try:
+            spec1 = ProductSpecification.objects.get(product_specification_id=int(spec1_id))
+            spec2 = ProductSpecification.objects.get(product_specification_id=int(spec2_id))
+            spec3 = ProductSpecification.objects.get(product_specification_id=int(spec3_id))
+        except ProductSpecification.DoesNotExist:
+            error = {'message': f"One of the given specification ids ({int(spec1_id)}, {int(spec2_id)} or {int(spec3_id)}) does not exists."}
+            raise serializers.ValidationError(error)
+        if product_type is None or spec1 is None or spec2 is None or spec3 is None:
+            error = {'message': f"Unknown error occured while trying to create the product."}
+            raise serializers.ValidationError(error)
+        product = Product.objects.create(**validated_data, product_type=product_type, spec1=spec1, spec2=spec2, spec3=spec3)
+        return product
+        
 
 
 

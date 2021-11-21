@@ -16,7 +16,7 @@ class ProductSpecification(models.Model):
     product_specification_value = models.CharField(max_length=50)
     product_type                = models.ForeignKey(ProductType, on_delete=models.CASCADE, related_name="specifications")
     def __str__(self):
-        return f"{self.product_specification_id}{self.product_specification_name}"
+        return f"{self.product_specification_id},{self.product_specification_name},{self.product_specification_value}"
 
 class Product(models.Model):
     class Meta:
@@ -91,7 +91,7 @@ class FiredEmployee(models.Model):
     last_name       = models.CharField(max_length=50)
     address         = models.CharField(max_length=250)
     phone_number    = models.CharField(max_length=15, unique=True)
-    work_place      = models.ForeignKey(Store, on_delete=models.DO_NOTHING)
+    work_place      = models.ForeignKey(Store, on_delete=models.DO_NOTHING, related_name="fired_employees")
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
 
