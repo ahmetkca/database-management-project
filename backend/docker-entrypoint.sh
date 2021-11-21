@@ -15,7 +15,7 @@
 #     sleep 3
 # done
 
-python manage.py makemigrations && python manage.py migrate --noinput || exit 1
+python manage.py makemigrations --noinput && python manage.py migrate --noinput || exit 1
 
 echo "Django docker is fully configured successfully."
 
