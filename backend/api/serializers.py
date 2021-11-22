@@ -1,5 +1,7 @@
+from os import read
 from re import L
-from django.db.models import manager
+from django.db.models import lookups, manager
+from django.db.models.query import QuerySet
 from rest_framework import fields, serializers
 from api.models import (
     Order, 
@@ -51,13 +53,6 @@ class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = ['product_id', 'product_name', 'price', 'product_description', 'product_type', 'spec1', 'spec2', 'spec3', 'product_type_id', 'spec1_id', 'spec2_id', 'spec3_id']
-        # write_only
-        # extra_kwargs = {
-        #     'product_type_id': {'write_only': True},
-        #     'spec1_id': {'write_only': True},
-        #     'spec2_id': {'write_only': True},
-        #     'spec3_id': {'write_only': True}
-        # }
 
 
     def create(self, validated_data):
@@ -145,3 +140,27 @@ class EmployeeSerializer(serializers.ModelSerializer):
             'phone_number',
             'work_place',
             'manager')
+
+class CustomerSerializer(serializers.ModelSerializer):
+    orders = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+    class Meta:
+        model = Customer
+        fields = ('customer_id', 'first_name', 'middle_name', 'last_name', 'date_of_birth', 'gender', 'email', 'shipping_address', 'phone_number', 'orders')
+        # read_only_fields = ('orders')
+
+class TransactionSerializer(serializers.ModelSerializer):
+    fk_product = ProductSerializer(read_only=True)
+    fk_order = None
+    class Meta:
+        model = Transaction  
+        fields = '__all__'  
+
+class OrderSerializer(serializers.ModelSerializer):
+    transactions = TransactionSerializer(many=True, read_only=True)
+    fk_customer = CustomerSerializer(read_only=True)
+    fk_store = StoreSerializer(read_only=True)
+
+    class Meta:
+        model = Order
+        fields = '__all__'
+TransactionSerializer.fk_order = OrderSerializer(read_only=True)
