@@ -1,8 +1,4 @@
-from os import read
-from re import L
-from django.db.models import lookups, manager
-from django.db.models.query import QuerySet
-from rest_framework import fields, serializers
+from rest_framework import serializers
 from api.models import (
     Order, 
     Transaction, 
