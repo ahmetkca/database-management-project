@@ -13,9 +13,14 @@ from api.models import (
     ProductSpecification,
     ProductType
     )
+from django.db import IntegrityError
+import logging
+from django.conf import settings
 
+fmt = getattr(settings, 'LOG_FORMAT', None)
+lvl = getattr(settings, 'LOG_LEVEL', logging.DEBUG)
 
-
+logging.basicConfig(format=fmt, level=lvl)
 
 
 class ProductTypeSerializer(serializers.ModelSerializer):
@@ -34,16 +39,29 @@ class ProductSpecificationSerializer(serializers.ModelSerializer):
 
 
 class ProductSerializer(serializers.ModelSerializer):
-    spec1 = ProductSpecificationSerializer(read_only=False)
-    spec2 = ProductSpecificationSerializer(read_only=False)
-    spec3 = ProductSpecificationSerializer(read_only=False)
-    product_type = ProductTypeSerializer(read_only=False)
+    spec1 = ProductSpecificationSerializer(read_only=True)
+    spec2 = ProductSpecificationSerializer(read_only=True)
+    spec3 = ProductSpecificationSerializer(read_only=True)
+    product_type = ProductTypeSerializer(read_only=True)
+    spec1_id = serializers.IntegerField(write_only=True)
+    spec2_id = serializers.IntegerField(write_only=True)
+    spec3_id = serializers.IntegerField(write_only=True)
+    product_type_id = serializers.IntegerField(write_only=True)
 
     class Meta:
         model = Product
-        fields = ['product_id', 'product_name', 'price', 'product_description', 'product_type', 'spec1', 'spec2', 'spec3']
+        fields = ['product_id', 'product_name', 'price', 'product_description', 'product_type', 'spec1', 'spec2', 'spec3', 'product_type_id', 'spec1_id', 'spec2_id', 'spec3_id']
+        # write_only
+        # extra_kwargs = {
+        #     'product_type_id': {'write_only': True},
+        #     'spec1_id': {'write_only': True},
+        #     'spec2_id': {'write_only': True},
+        #     'spec3_id': {'write_only': True}
+        # }
+
 
     def create(self, validated_data):
+        logging.debug(validated_data)
         product_type_id = validated_data.pop('product_type_id')
         spec1_id = validated_data.pop('spec1_id')
         spec2_id = validated_data.pop('spec2_id')
@@ -67,8 +85,13 @@ class ProductSerializer(serializers.ModelSerializer):
         if product_type is None or spec1 is None or spec2 is None or spec3 is None:
             error = {'message': f"Unknown error occured while trying to create the product."}
             raise serializers.ValidationError(error)
-        product = Product.objects.create(**validated_data, product_type=product_type, spec1=spec1, spec2=spec2, spec3=spec3)
-        return product
+        try:
+            product = Product.objects.create(**validated_data, product_type=product_type, spec1=spec1, spec2=spec2, spec3=spec3)
+            product.save()
+            return product
+        except IntegrityError:
+            error = {'message': f"There is already product with the same type and specifications BUDDY."}
+            raise serializers.ValidationError(error)
         
 
 
