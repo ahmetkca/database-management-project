@@ -112,15 +112,15 @@ class Customer(models.Model):
 class Order(models.Model):
     order_id        = models.AutoField(primary_key=True)
     ordered_at      = models.DateTimeField(auto_now_add=True)
-    fk_customer  = models.ForeignKey(Customer, on_delete=models.DO_NOTHING)
-    fk_store     = models.ForeignKey(Store, on_delete=models.DO_NOTHING)
+    fk_customer  = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='orders')
+    fk_store     = models.ForeignKey(Store, on_delete=models.DO_NOTHING, related_name='orders')
     def __str__(self):
         return f"{self.order_id}"
 
 class Transaction(models.Model):
     transaction_id  = models.AutoField(primary_key=True)
     quantity        = models.IntegerField()
-    fk_product   = models.ForeignKey(Product, on_delete=models.DO_NOTHING)
-    fk_order     = models.ForeignKey(Order, on_delete=models.DO_NOTHING)
+    fk_product   = models.ForeignKey(Product, on_delete=models.DO_NOTHING, related_name='transactionbs')
+    fk_order     = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='transactions')
     def __str__(self):
         return f"{self.transaction_id}"
