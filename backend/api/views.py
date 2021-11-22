@@ -2,8 +2,8 @@
 # from rest_framework.decorators import api_view
 from rest_framework import serializers, viewsets
 from rest_framework.response import Response
-from api.models import Store, Employee, Inventory, StorageRack, Product, ProductType, ProductSpecification
-from api.serializers import StoreSerializer, EmployeeSerializer, InventorySerializer, ProductSerializer, ProductTypeSerializer, ProductSpecificationSerializer, StorageRackSerializer
+from api.models import Customer, Order, Transaction, Store, Employee, Inventory, StorageRack, Product, ProductType, ProductSpecification
+from api.serializers import CustomerSerializer, OrderSerializer, TransactionSerializer, StoreSerializer, EmployeeSerializer, InventorySerializer, ProductSerializer, ProductTypeSerializer, ProductSpecificationSerializer, StorageRackSerializer
 
 # Create your views here.
 
@@ -12,11 +12,11 @@ class ProductTypeViewSet(viewsets.ModelViewSet):
     serializer_class = ProductTypeSerializer
 
 class ProductSpecificationViewSet(viewsets.ModelViewSet):
-    queryset = ProductSpecification.objects.all().order_by("product_specification_name")
+    queryset = ProductSpecification.objects.all()
     serializer_class = ProductSpecificationSerializer
 
 class ProductViewSet(viewsets.ModelViewSet):
-    queryset = Product.objects.all().order_by("product_name")
+    queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
 class InventoryViewSet(viewsets.ModelViewSet):
@@ -34,3 +34,15 @@ class StoreViewSet(viewsets.ModelViewSet):
 class EmployeeViewSet(viewsets.ModelViewSet):
     queryset = Employee.objects.all()
     serializer_class = EmployeeSerializer
+
+class CustomerViewSet(viewsets.ModelViewSet):
+    queryset = Customer.objects.all()
+    serializer_class = CustomerSerializer
+
+class TransactionViewSet(viewsets.ModelViewSet):
+    queryset = Transaction.objects.all()
+    serializer_class = TransactionSerializer
+
+class OrderViewSet(viewsets.ModelViewSet):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
