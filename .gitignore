@@ -2,6 +2,8 @@
 # Created by https://www.toptal.com/developers/gitignore/api/django,node,visualstudiocode
 # Edit at https://www.toptal.com/developers/gitignore?templates=django,node,visualstudiocode
 
+postgres_views/
+
 ### Django ###
 *.log
 *.pot
