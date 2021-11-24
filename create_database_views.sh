@@ -1,3 +1,4 @@
+#!/bin/bash
 function exec_postgres () {
     docker-compose exec db psql -U postgres -d api-db -c "$1"
 }
