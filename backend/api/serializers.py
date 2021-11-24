@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from api.models import (
+    FiredEmployee,
     Order, 
     Transaction, 
     Store, 
@@ -9,7 +10,18 @@ from api.models import (
     Employee,
     Product,
     ProductSpecification,
-    ProductType
+    ProductType,
+    View1,
+    View10,
+    View11,
+    View12,
+    View13,
+    View2,
+    View3,
+    View4,
+    View5,
+    View8,
+    View9
     )
 from django.db import IntegrityError
 import logging
@@ -90,11 +102,13 @@ class ProductSerializer(serializers.ModelSerializer):
 
 class StoreSerializer(serializers.ModelSerializer):
     employees = serializers.StringRelatedField(many=True, read_only=True)
+    fired_employees = None
     inventory = None
 
     class Meta:
         model = Store
-        fields = ('store_id', 'address', 'phone_number', 'employees', 'inventory')
+        fields = ('store_id', 'address', 'phone_number', 'employees', 'inventory', 'fired_employees')
+        read_only_fields = ['fired_employees']
 
 
 class StorageRackSerializer(serializers.ModelSerializer):
@@ -160,3 +174,76 @@ class OrderSerializer(serializers.ModelSerializer):
         model = Order
         fields = '__all__'
 TransactionSerializer.fk_order = OrderSerializer(read_only=True)
+
+class FiredEmployeeSerializer(serializers.ModelSerializer):
+    work_place = StoreSerializer(read_only=True)
+    class Meta:
+        model = FiredEmployee
+        fields = '__all__'
+StoreSerializer.fired_employees = FiredEmployeeSerializer(many=True, read_only=True)
+
+class View1Serializer(serializers.ModelSerializer):
+    class Meta:
+        model = View1
+        fields = '__all__'
+        read_only_fields = [f.name for f in View1._meta.get_fields()]
+
+class View2Serializer(serializers.ModelSerializer):
+    class Meta:
+        model = View2
+        fields = '__all__'
+        read_only_fields = [f.name for f in View2._meta.get_fields()]
+
+class View3Serializer(serializers.ModelSerializer):
+    class Meta:
+        model = View3
+        fields = '__all__'
+        read_only_fields = [f.name for f in View3._meta.get_fields()]
+
+class View4Serializer(serializers.ModelSerializer):
+    class Meta:
+        model = View4
+        fields = '__all__'
+        read_only_fields = [f.name for f in View4._meta.get_fields()]
+
+class View5Serializer(serializers.ModelSerializer):
+    class Meta:
+        model = View5
+        fields = '__all__'
+        read_only_fields = [f.name for f in View5._meta.get_fields()]
+
+class View8Serializer(serializers.ModelSerializer):
+    class Meta:
+        model = View8
+        fields = '__all__'
+        read_only_fields = [f.name for f in View8._meta.get_fields()]
+
+class View9Serializer(serializers.ModelSerializer):
+    class Meta:
+        model = View9
+        fields = '__all__'
+        read_only_fields = [f.name for f in View9._meta.get_fields()]
+
+class View10Serializer(serializers.ModelSerializer):
+    class Meta:
+        model = View10
+        fields = '__all__'
+        read_only_fields = [f.name for f in View10._meta.get_fields()]
+
+class View11Serializer(serializers.ModelSerializer):
+    class Meta:
+        model = View11
+        fields = '__all__'
+        read_only_fields = [f.name for f in View11._meta.get_fields()]
+
+class View12Serializer(serializers.ModelSerializer):
+    class Meta:
+        model = View12
+        fields = '__all__'
+        read_only_fields = [f.name for f in View12._meta.get_fields()]
+
+class View13Serializer(serializers.ModelSerializer):
+    class Meta:
+        model = View13
+        fields = '__all__'
+        read_only_fields = [f.name for f in View13._meta.get_fields()]
