@@ -85,13 +85,14 @@ class FiredEmployee(models.Model):
     ssn             = models.IntegerField(unique=True)
     email           = models.EmailField(unique=True)
     gender          = models.CharField(max_length=10, choices=Gender.choices)
-    date_of_birth   = models.DateField(null=True)
     first_name      = models.CharField(max_length=50)
-    middle_name     = models.CharField(max_length=50, null=True)
     last_name       = models.CharField(max_length=50)
+    work_place      = models.ForeignKey(Store, on_delete=models.DO_NOTHING, related_name="fired_employees")
     address         = models.CharField(max_length=250)
     phone_number    = models.CharField(max_length=15, unique=True)
-    work_place      = models.ForeignKey(Store, on_delete=models.DO_NOTHING, related_name="fired_employees")
+    date_of_birth   = models.DateField(null=True)
+    
+    
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
 
@@ -124,3 +125,111 @@ class Transaction(models.Model):
     fk_order     = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='transactions')
     def __str__(self):
         return f"{self.transaction_id}"
+
+class View1(models.Model):
+    product_id = models.IntegerField(primary_key=True, db_column='Product ID')
+    product_name = models.CharField(max_length=50, db_column="Product Name")
+    product_description = models.CharField(max_length=250, db_column='Product Description')
+    price = models.DecimalField(max_digits=15, decimal_places=2, db_column='Price')
+    spec1_name = models.CharField(max_length=50, db_column='Specification 1')
+    spec1_value = models.CharField(max_length=50, db_column='Specification 1 Value')
+    spec2_name = models.CharField(max_length=50, db_column='Specification 2')
+    spec2_value = models.CharField(max_length=50, db_column='Specification 2 Value')
+    spec3_name = models.CharField(max_length=50, db_column='Specification 3')
+    spec3_value = models.CharField(max_length=50, db_column='Specification 3 Value')
+    product_type = models.CharField(max_length=50, db_column='Product Type')
+
+    class Meta:
+        managed = False
+        db_table = "view1"
+
+class View2(models.Model):
+    product_type = models.CharField(max_length=50, primary_key=True, db_column='Product Type')
+    number_of_products = models.BigIntegerField(db_column='Number of Products')
+
+    class Meta:
+        managed = False
+        db_table = 'view2'
+
+class View3(models.Model):
+    employee_id = models.IntegerField(primary_key=True, db_column='Employee ID')
+    first_name = models.CharField(max_length=50, db_column='First Name')
+    last_name = models.CharField(max_length=50, db_column='Last Name')
+    date_of_birth = models.DateField(db_column='Date of Birth')
+    work_place = models.IntegerField(db_column='Works in Store with id:')
+
+    class Meta:
+        managed = False
+        db_table = 'view3'
+
+class View4(models.Model):
+    order_id = models.IntegerField(primary_key=True, db_column='Order ID')
+    first_name = models.CharField(max_length=50, db_column='First Name')
+    last_name = models.CharField(max_length=50, db_column='Last Name')
+    class Meta:
+        managed = False
+        db_table = "view4"
+
+class View5(models.Model):
+    employee_id = models.IntegerField(primary_key=True)
+    ssn = models.IntegerField()
+    gender = models.CharField(max_length=50)
+    email = models.CharField(max_length=50)
+    gender = models.CharField(max_length=50)
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    phone_number = models.CharField(max_length=15)
+    work_place_id = models.IntegerField()
+    address = models.CharField(max_length=250)
+    date_of_birth = models.DateField()
+
+    class Meta:
+        managed = False
+        db_table = "view5"
+
+
+class BaseAllProductsByTypeModel(models.Model):
+    product_id = models.IntegerField(primary_key=True, db_column="Product id")
+    product_name = models.CharField(max_length=50, db_column="Product Name")
+    product_description = models.CharField(max_length=250, db_column='Product Description')
+    price = models.DecimalField(max_digits=15, decimal_places=2, db_column='Price')
+    spec1_name = models.CharField(max_length=50, db_column='Specification 1')
+    spec1_value = models.CharField(max_length=50, db_column='Specification 1 Value')
+    spec2_name = models.CharField(max_length=50, db_column='Specification 2')
+    spec2_value = models.CharField(max_length=50, db_column='Specification 2 Value')
+    spec3_name = models.CharField(max_length=50, db_column='Specification 3')
+    spec3_value = models.CharField(max_length=50, db_column='Specification 3 Value')
+
+    class Meta:
+        abstract = True
+        managed = False
+
+class View8(BaseAllProductsByTypeModel):
+    class Meta:
+        managed = False
+        db_table = "view8"
+
+class View9(BaseAllProductsByTypeModel):
+    class Meta:
+        managed = False
+        db_table = "view9"
+
+class View10(BaseAllProductsByTypeModel):
+    class Meta:
+        managed = False
+        db_table = "view10"
+
+class View11(BaseAllProductsByTypeModel):
+    class Meta:
+        managed = False
+        db_table = "view11"
+
+class View12(BaseAllProductsByTypeModel):
+    class Meta:
+        managed = False
+        db_table = "view12"
+
+class View13(BaseAllProductsByTypeModel):
+    class Meta:
+        managed = False
+        db_table = "view13"
