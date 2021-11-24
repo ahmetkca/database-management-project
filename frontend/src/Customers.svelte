@@ -43,6 +43,6 @@
         </table>
 
     
-    <button class="btn btn-wide btn-lg" on:click={() => push('/customerorders')}>View Customer Orders</button> <br><br>
+    <button class="btn btn-wide btn-lg" on:click={() => push('/view4')}>View Customer Orders</button> <br><br>
     <button class="btn btn-wide btn-lg" on:click={() => push('/addcustomer')}>Add New Customer</button> 
 </div>

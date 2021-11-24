@@ -2,7 +2,7 @@
 
     import { onMount } from 'svelte';
     
-    const url = 'http://localhost:8000/stores/';
+    const url = 'http://localhost:8000/inventories/';
     let data = [];
     
     onMount(async () => {
@@ -33,7 +33,7 @@
             </figure> 
             <div class="max-w-md card-body">
                 <h2 class="card-title">Inventory ID {column.inventory_id}</h2> 
-                <h2><b>Contained Within Store with ID: </b></h2><p>{column.fk_building}</p> 
+                <h2><b>Contained Within Store with ID: </b></h2><p>{column.fk_building.store_id}</p> 
             </div>
             </div>
         </div>

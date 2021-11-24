@@ -17,12 +17,23 @@
   import Customers from './Customers.svelte';
   import Inventories from './Inventories.svelte';
   import StorageContainers from './StorageContainers.svelte';
-  import AllProducts from './AllProducts.svelte';
-  import CustomerOrders from './CustomerOrders.svelte';
+  import View4 from './View4.svelte';
   import AddCustomer from './AddCustomer.svelte';
+  import AddProduct from './AddProduct.svelte';
+  import AddGame from './AddGame.svelte';
+  import AddSystem from './AddSystem.svelte';
+  import AddMonitor from './AddMonitor.svelte';
+  import AddHeadSet from './AddHeadSet.svelte';
+  import AddCharger from './AddCharger.svelte';
+  import AddHoodie from './AddHoodie.svelte';
+  import View1 from './View1.svelte';
+  import View2 from './View2.svelte';
+  import FunFacts from './Fun Facts.svelte';
+  import View3 from './View3.svelte';
+  import View5 from './View5.svelte';
   /* Routing */
 
-  
+
 </script>
 
 <!-- Navbar -->
@@ -52,8 +63,11 @@
             <a class="btn btn-ghost btn-sm rounded-btn" href="/storagecontainers" use:link>
               Storage Containers
             </a>  
-            <a class="btn btn-ghost btn-sm rounded-btn" href="/allproducts" use:link>
+            <a class="btn btn-ghost btn-sm rounded-btn" href="/view1" use:link>
               All Products
+            </a>  
+            <a class="btn btn-ghost btn-sm rounded-btn" href="/funfacts" use:link>
+              Fun Facts
             </a>  
     </div>
   </div> 
@@ -81,11 +95,22 @@
   '/employees': Employees,
   '/firedemployees': FiredEmployees,
   '/customers': Customers,
-  '/customerorders': CustomerOrders,
+  '/view4': View4,
   '/inventories': Inventories,
   '/storagecontainers': StorageContainers,
-  '/allproducts': AllProducts,
   '/addcustomer': AddCustomer,
+  '/addproduct': AddProduct,
+  '/addgame': AddGame,
+  '/addsystem': AddSystem,
+  '/addmonitor': AddMonitor,
+  '/addheadset': AddHeadSet,
+  '/addcharger': AddCharger,
+  '/addhoodie': AddHoodie,
+  '/view1': View1,
+  '/view2': View2,
+  '/funfacts': FunFacts,
+  '/view3': View3,
+  '/view5': View5,
   
   '*': NotFound 
 }} />
