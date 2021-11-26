@@ -95,8 +95,10 @@ CREATE VIEW
 View13 has been successfully created
 ```
 
+```
 Backend (Django Rest Framework) runs on port 8000
 Frontend (Svelte) runs on port 3000
 Database (PostgreSQL) runs on port 5432
+```
 
 > locate to http://localhost:3000 to interact with frontend
