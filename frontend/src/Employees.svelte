@@ -5,7 +5,7 @@
     const url = 'http://localhost:8000/employees/';
     let data = [];
     
-    let columns = ["Employee", "SSN", "Email", "Gender", "Date of Birth", "Address", "Phone Number", "Work Place (Store ID)", "Manager ID"]
+    let columns = ["Employee", "Email", "Gender", "Date of Birth", "Address", "Phone Number", "Work Place (Store ID)", "Manager ID"]
     onMount(async () => {
         let response = await fetch(url, {mode:"cors"});
         data = await response.json();
@@ -48,23 +48,22 @@
                     </div>
                 </div> 
                 <div>
-                    <div class="font-bold">
-                        {column.first_name} {column.middle_name} {column.last_name}
+                        <div class="font-bold">
+                            {column.first_name} {column.middle_name} {column.last_name}
                         </div> 
-                    <div class="text-sm opacity-50">
-                        Employee ID: {column.employee_id}
+                        <div class="text-sm opacity-50">
+                            Employee ID: {column.employee_id}
                         </div>
                 </div>
                 </div>
 
-                <td>{column.ssn}</td>
                 <td>{column.email}</td>
                 <td>{column.gender}</td>
                 <td>{column.date_of_birth}</td>
                 <td>{column.address}</td>
                 <td>{column.phone_number}</td>
-                <td>{column.work_place}</td>
-                <td>{column.manager_id}</td>
+                <td>{column.work_place.store_id}</td>
+                <td>{column.manager}</td>
             
             </tr>
         {/each}

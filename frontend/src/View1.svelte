@@ -2,10 +2,10 @@
 
     import { onMount } from 'svelte';
     
-    const url = 'http://localhost:8000/view11/';
+    const url = 'http://localhost:8000/view1/';
     let data = [];
     
-    let columns = ["Product ID", "Monitor Name", " ", " ", " ", "Monitor Description", "Monitor Price"]
+    let columns = ["Product ID", "Product Category", "Product Name", " ", " ", " ", "Product Description", "Product Price"]
     onMount(async () => {
         let response = await fetch(url, {mode:"cors"});
         data = await response.json();
@@ -27,6 +27,7 @@
                 {#each data as column}
                     <tr>
                         <td>{column.product_id}</td>
+                        <td>{column.product_type}</td>
                         <td>{column.product_name}</td>
                         
                         <td>
@@ -80,5 +81,6 @@
             </tbody>
         </table>
 
-        <button class="btn btn-wide btn-lg" on:click={() => push('/')}>Go Back</button> <br><br>
+        <button class="btn btn-wide btn-lg" on:click={() => push('/addproduct')}>Add Product</button> <br><br>
+        <button class="btn btn-wide btn-lg" on:click={() => push('/view2')}>View Product Distribution</button> 
 </div>

@@ -2,7 +2,7 @@
 
     import { onMount } from 'svelte';
     
-    const url = 'http://localhost:8000/stores/';
+    const url = 'http://localhost:8000/storage-racks/';
     let data = [];
     
     onMount(async () => {
@@ -32,8 +32,8 @@
                 <img alt="?" src="https://picsum.photos/300/200?random={randomize(counter)}" class="rounded-lg shadow-lg">
             </figure> 
             <div class="max-w-md card-body">
-                <h2 class="card-title">Container ID {column.rack_id}</h2> 
-                <h2><b>Contains Product with ID: </b></h2><p>{column.fk_product_id}</p> 
+                <h2 class="card-title">Container ID {column.storage_rack_id}</h2> 
+                <h2><b>Contains Product with ID: </b></h2><p>{column.fk_product.product_id}</p> 
                 <h2><b>Quantity of Product Stored: </b></h2><p>{column.quantity}</p> 
                 <h2><b>Located Within Inventory with ID: </b></h2><p>{column.fk_inventory}</p> 
             </div>

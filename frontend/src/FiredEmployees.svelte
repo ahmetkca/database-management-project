@@ -2,7 +2,7 @@
 
     import { onMount } from 'svelte';
     
-    const url = 'http://localhost:8000/employees/';
+    const url = 'http://localhost:8000/fired-employees/';
     let data = [];
     
     let columns = ["Employee", "SSN", "Email", "Gender", "Date of Birth", "Address", "Phone Number", "Work Place (Store ID)"]
@@ -63,7 +63,7 @@
                 <td>{column.date_of_birth}</td>
                 <td>{column.address}</td>
                 <td>{column.phone_number}</td>
-                <td>{column.work_place}</td>
+                <td>{column.work_place.store_id}</td>
             
             </tr>
         {/each}
