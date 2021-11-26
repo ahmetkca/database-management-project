@@ -20,10 +20,11 @@
 # once you execute the above command make sure all the services are running and db is healthy
 ~$ docker-compose ps
 # this is what the output should look like if everything is working fine.
-NAME                COMMAND                  SERVICE             STATUS              PORTS
-backend             "/docker-entrypoint.…"   backend             running             0.0.0.0:8000->8000/tcp
-db                  "docker-entrypoint.s…"   db                  running (healthy)   0.0.0.0:5432->5432/tcp
-frontend            "docker-entrypoint.s…"   frontend            running             0.0.0.0:3000->3000/tcp
+```
+
+![image info](./pictures/docker_compose_ps_console_output.PNG)
+
+```bash
 ~$ ./populate_database.sh       # if on ubuntu 20.04 run with sudo
 # the output for the above command should look like below screenshot
 ```
@@ -31,7 +32,7 @@ frontend            "docker-entrypoint.s…"   frontend            running      
 ![image info](./pictures/populate_database_console_output.PNG)
 ```bash
 ~$ ./create_database_views.sh   # if on ubuntu 20.04 run with sudo
-# this is what the output should look like if everything is working fine.
+# this is what the output should look like if everything is working fine below screenshot.
 ```
 
 ![image info](./pictures/create_database_views_console_output.PNG)
