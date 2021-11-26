@@ -25,75 +25,16 @@ backend             "/docker-entrypoint.…"   backend             running      
 db                  "docker-entrypoint.s…"   db                  running (healthy)   0.0.0.0:5432->5432/tcp
 frontend            "docker-entrypoint.s…"   frontend            running             0.0.0.0:3000->3000/tcp
 ~$ ./populate_database.sh       # if on ubuntu 20.04 run with sudo
-# this is the output for above command
-Populating  Product_Type Table...
-INSERT 0 6
-Product_Type table successfully populated.
-Populating  Product_Specification Table...
-INSERT 0 63
-Product_Specification table successfully populated.
-Populating  Product Table...
-INSERT 0 23
-Product table successfully populated.
-Populating  Store Table...
-INSERT 0 6
-Store table successfully populated.
-Populating  Customer Table...
-INSERT 0 6
-Customer table successfully populated.
-Populating  Employee Table...
-INSERT 0 18
-Employee table successfully populated.
-Populating  Inventory Table...
-INSERT 0 6
-Inventory table successfully populated.
-Populating  Storage_Rack Table...
-INSERT 0 138
-Storage_Rack table successfully populated.
-Populating  Order Table...
-INSERT 0 6
-Order table successfully populated.
-Populating  Transaction Table...
-INSERT 0 9
-Transaction table successfully populated.
-Populating  Fired_Employee Table...
-INSERT 0 7
-Fired_Employee table successfully populated.
- setval
---------
-     23
-(1 row)
-
- setval
---------
-      6
-(1 row)
-~$ ./create_database_views.sh   # if on ubuntu 20.04 run with sudo
-# this is the output for above command
- ... Create Views ...
-CREATE VIEW
-View1 has been successfully created
-CREATE VIEW
-View2 has been successfully created
-CREATE VIEW
-View3 has been successfully created
-CREATE VIEW
-View4 has been successfully created
-CREATE VIEW
-View5 has been successfully created
-CREATE VIEW
-View8 has been successfully created
-CREATE VIEW
-View9 has been successfully created
-CREATE VIEW
-View10 has been successfully created
-CREATE VIEW
-View11 has been successfully created
-CREATE VIEW
-View12 has been successfully created
-CREATE VIEW
-View13 has been successfully created
+# the output for the above command should look like below screenshot
 ```
+
+![image info](./pictures/populate_database_console_output.PNG)
+```bash
+~$ ./create_database_views.sh   # if on ubuntu 20.04 run with sudo
+# this is what the output should look like if everything is working fine.
+```
+
+![image info](./pictures/create_database_views_console_output.PNG)
 
 ```
 Backend (Django Rest Framework) runs on port 8000
